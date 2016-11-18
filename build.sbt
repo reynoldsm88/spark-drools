@@ -14,8 +14,11 @@ resolvers in ThisBuild ++= Seq( "Sonatype releases" at "https://oss.sonatype.org
                                 "Spray IO Repository" at "http://repo.spray.io/",
                                 "Maven Central" at "https://repo1.maven.org/maven2/" )
 
-lazy val root = ( project in file( "." ) ).aggregate( model )
+lazy val root = ( project in file( "." ) ).aggregate( model, droolsJob )
 
-lazy val model = ( project in file( "spark-drools-model" ) ).settings( libraryDependencies ++= Seq() )
+lazy val model = ( project in file( "spark-drools-model" ) )
 
-
+lazy val droolsJob = ( project in file( "spark-drools-job" ) )
+  .settings( libraryDependencies ++= slf4j ++ logback ++ drools ++ kieAPI ++ spark )
+  .dependsOn( model )
+  .enablePlugins( JavaAppPackaging )
