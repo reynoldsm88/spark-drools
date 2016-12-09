@@ -17,6 +17,7 @@ resolvers in ThisBuild ++= Seq( "Sonatype releases" at "https://oss.sonatype.org
 lazy val root = ( project in file( "." ) ).aggregate( model, droolsJob, corporaProcessingJobs )
 
 lazy val model = ( project in file( "spark-drools-model" ) )
+  .settings( libraryDependencies ++= slf4j ++ logback ++ junit ++ junitInterface )
 
 lazy val corporaProcessingJobs = ( project in file( "corpora-processing-jobs" ) )
   .settings( libraryDependencies ++= slf4j ++ logback ++ openNLP ++ betterFiles ++ hadoop ++ spark )
